@@ -4,11 +4,14 @@
 class Animation
 {
 private:
+	sf::Texture* texture;
 	sf::Sprite** sprite;
-	int frame;
+	sf::Clock clock;
+	int frame, size;
+	int speed;
 
 public:
-	Animation(int frames);
+	Animation(int frames, int speed);
 	void render(sf::RenderWindow* rw);
 	void tick();
 };

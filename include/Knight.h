@@ -13,5 +13,6 @@ private:
 public:
 	Knight();
 	void render(sf::RenderWindow* rw);
+	void tick();
 };
 
