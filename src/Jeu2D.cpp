@@ -4,6 +4,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "Knight.h"
+#include "Animation.h"
 
 
 using namespace std;
@@ -13,7 +14,7 @@ int main()
 {
     RenderWindow * renderWindow = new RenderWindow(VideoMode(1280, 720), "Jeu 2D");
     Event event;
-    Knight knight;
+    Knight knight(renderWindow);
     Clock clock;
     int currentTime = 0, lastTime = clock.getElapsedTime().asMilliseconds();
 
@@ -29,17 +30,31 @@ int main()
 
         if (clock.getElapsedTime().asMilliseconds() >= 17) {
             
+			//Keybind et Action
+			if (!Keyboard::isKeyPressed(Keyboard::Right) && knight.animation->getDirection() == 1 && !Keyboard::isKeyPressed(Keyboard::Left))
+				knight.move(0, 0, knight.animation->getDirection());
 
-            if (Keyboard::isKeyPressed(Keyboard::Right))
-                knight.move(speed, 0);
+			if (!Keyboard::isKeyPressed(Keyboard::Left) && knight.animation->getDirection() == 0 && !Keyboard::isKeyPressed(Keyboard::Right))
+				knight.move(0, 0, knight.animation->getDirection());
 
-            if (Keyboard::isKeyPressed(Keyboard::Left))
-                knight.move(-speed, 0);
+			//Avancer vers la gauche
+			if(Keyboard::isKeyPressed(Keyboard::Left)) {		
+				//SPRINT
+				if (Keyboard::isKeyPressed(Keyboard::LShift)) 
+					knight.move(-speed - 3, 0, knight.animation->getDirection());
+				else
+					knight.move(-speed, 0, knight.animation->getDirection());
+			}
 
-			if (!Keyboard::isKeyPressed(Keyboard::Right))
-				knight.move(0, 0);
+			//Avancer vers la droite
+			if(Keyboard::isKeyPressed(Keyboard::Right)) {		
 
-				
+				if (Keyboard::isKeyPressed(Keyboard::LShift)) //SPRINT
+					knight.move(speed + 3, 0, knight.animation->getDirection());
+				else
+					knight.move(speed, 0, knight.animation->getDirection());
+			}
+
 
             knight.tick();
 

@@ -6,16 +6,15 @@
 class Knight
 {
 private:
-	Animation* animation;
 	int x, y, moveX;
-	
 
 public:
-	Knight();
+	Knight(sf::RenderWindow* rw);
+	Animation* animation;
 	void render(sf::RenderWindow* rw);
 	void tick();
-	void move(int x, int y);
-	void setMoveX(int x);
+	void move(int x, int y, int direction);
+	void setMoveX(float x);
 	int getX();
 	int getY();
 };

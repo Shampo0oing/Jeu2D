@@ -5,11 +5,11 @@
 using namespace std;
 using namespace sf;
 
-Knight::Knight() {
+Knight::Knight(sf::RenderWindow* rw) {
 	this->animation = new Animation(6, 200);
 	this->moveX = 0;
-	this->x = 0;
-	this->y = 0;
+	this->x = rw->getSize().x / 2.;
+	this->y = rw->getSize().y / 2.;
 	
 }
 
@@ -23,10 +23,11 @@ void Knight::tick() {
 	this->animation->tick();
 }
 
-void Knight::move(int x, int y) {
+void Knight::move(int x, int y, int direction) {
 	
-	if (x == 0)
+	if (x == 0){
 		this->animation->setMovement(false);
+	}
 
 	else
 		this->animation->setMovement(true);
@@ -41,9 +42,14 @@ void Knight::move(int x, int y) {
 
 }
 
-void Knight::setMoveX(int x) {
+void Knight::setMoveX(float x) {
 	this->moveX = x;
 }
+//
+//void Knight::setX(float x) {
+//
+//	this->x = x;
+//}
 
 int Knight::getX() {
 	return this->x;
