@@ -6,8 +6,9 @@
 class Knight
 {
 private:
-	Animation * animation;
+	Animation* animation;
 	int x, y, moveX;
+	
 
 public:
 	Knight();

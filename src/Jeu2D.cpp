@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include "Knight.h"
 
+
 using namespace std;
 using namespace sf;
 
@@ -26,8 +27,8 @@ int main()
             if (event.type == Event::EventType::Closed)
                 renderWindow->close();
 
-        if (currentTime - lastTime >= 17) {
-            lastTime = clock.getElapsedTime().asMilliseconds();
+        if (clock.getElapsedTime().asMilliseconds() >= 17) {
+            
 
             if (Keyboard::isKeyPressed(Keyboard::Right))
                 knight.move(speed, 0);
@@ -35,8 +36,14 @@ int main()
             if (Keyboard::isKeyPressed(Keyboard::Left))
                 knight.move(-speed, 0);
 
+			if (!Keyboard::isKeyPressed(Keyboard::Right))
+				knight.move(0, 0);
+
+				
+
             knight.tick();
 
+			clock.restart();
             // Render
             renderWindow->clear();
             knight.render(renderWindow);
