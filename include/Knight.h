@@ -6,13 +6,16 @@
 class Knight
 {
 private:
-	sf::Sprite sprite[6];
-	int direction;
 	Animation * animation;
+	int x, y, moveX;
 
 public:
 	Knight();
 	void render(sf::RenderWindow* rw);
 	void tick();
+	void move(int x, int y);
+	void setMoveX(int x);
+	int getX();
+	int getY();
 };
 

@@ -19,22 +19,29 @@ int main()
     while (renderWindow->isOpen()) {
         currentTime = clock.getElapsedTime().asMilliseconds();
 
-        while (renderWindow->pollEvent(event)) {
-            if (event.type == Event::EventType::Closed) {
+        int speed = 3;
+
+        // Close button
+        if (renderWindow->pollEvent(event))
+            if (event.type == Event::EventType::Closed)
                 renderWindow->close();
-            }
-        }
 
         if (currentTime - lastTime >= 17) {
             lastTime = clock.getElapsedTime().asMilliseconds();
+
+            if (Keyboard::isKeyPressed(Keyboard::Right))
+                knight.move(speed, 0);
+
+            if (Keyboard::isKeyPressed(Keyboard::Left))
+                knight.move(-speed, 0);
+
+            knight.tick();
 
             // Render
             renderWindow->clear();
             knight.render(renderWindow);
             renderWindow->display();
         }
-
-        knight.tick();
     }
 }
 
