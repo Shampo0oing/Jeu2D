@@ -1,10 +1,21 @@
 #include "ImageLoader.h"
 #include <filesystem>
-namespace fs = std::filesystem;
+using namespace std;
+using namespace sf;
 
-sf::Sprite* ImageLoader::LoadeImage(std::string& s)
+std::map<std::string, sf::Sprite*> ImageLoader::images_;
+
+Sprite* ImageLoader::LoadImage(const string& path) 
 {
-	std::string ImagePath_ = s;
+	if (images_.find(path) == images_.end()) {
 
-	return nullptr;
+		Texture* texture = new Texture;
+		texture->loadFromFile(path);
+		Sprite* sprite = new Sprite(*texture);
+		sprite->scale(3.0, 3.0);
+		images_[path] = sprite;
+	}
+
+	return images_[path];
 }
+

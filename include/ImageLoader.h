@@ -1,22 +1,16 @@
 #include <SFML/Graphics.hpp>
-#include <filesystem>
 #include <string>
 #include <iostream>
 #include <map>
+#include <iterator>
 
 
 class ImageLoader {
 
 public:
-	static sf::Sprite* LoadeImage(std::string& s);
-
-
+	static sf::Sprite* LoadImage(const std::string& path);
 
 private:
-	sf::Sprite* sprite_;
-	sf::Texture* texture_;
-	int speed_;
-	std::string ImagePath_;
-
+	static std::map<std::string, sf::Sprite*> images_;
 
 };
