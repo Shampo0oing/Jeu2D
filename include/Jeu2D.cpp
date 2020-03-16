@@ -4,6 +4,7 @@
 #include <map>
 #include <iterator>
 #include "ImageLoader.h"
+#include "Animation.h"
 using namespace std;
 using namespace sf;
 
@@ -12,6 +13,8 @@ int main() {
 	RenderWindow* rw = new RenderWindow(VideoMode(1280, 720), "Jeu2D");
 	Event event;
 	Sprite* sprite;
+	Animation a("../assets/images/idle", 200, false);
+	Clock clock;
 
 	while (rw->isOpen()) {
 
@@ -19,13 +22,23 @@ int main() {
 			if (event.type == Event::EventType::Closed)
 				rw->close();
 		
-		sprite = ImageLoader::LoadImage("../assets/images/idle/adventurer-idle-02.png");
+		 //augmente le nombres de frames
 
 
+		if (clock.getElapsedTime().asMilliseconds() >= 17) {
 
-		rw->clear();
-		rw->draw(*sprite);
-		rw->display();
+			rw->clear();
+
+			a.render(rw); //Affiche les sprites
+
+			rw->display();
+
+			clock.restart();
+
+		}
+
+		a.tick();
+
 	}
 
 
