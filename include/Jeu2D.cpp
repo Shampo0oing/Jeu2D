@@ -23,20 +23,17 @@ int main() {
 			if (event.type == Event::EventType::Closed)
 				rw->close();
 
-
-
-			if (Keyboard::isKeyPressed(Keyboard::X)) {
-				c.selectAnimation("attack");
+			if (!Keyboard::isKeyPressed(Keyboard::X) && !Keyboard::isKeyPressed(Keyboard::Right)) {
+				c.selectAnimation("idle");
 			}
 
 			if (Keyboard::isKeyPressed(Keyboard::Right)) {
 				c.selectAnimation("run");
 			}
 
-			if(!Keyboard::isKeyPressed(Keyboard::X) && !Keyboard::isKeyPressed(Keyboard::Right))
-				c.selectAnimation("idle");
-
-
+			if (Keyboard::isKeyPressed(Keyboard::X)) {
+				c.selectAnimation("attack");
+			}
 		}
 		
 			//augmente le nombres de frames
@@ -59,10 +56,7 @@ int main() {
 		}
 
 
-
 		c.tick();
-
-
 
 
 	}

@@ -20,5 +20,4 @@ public:
 private:
 	std::map<std::string, Animation*> animations_;
 	std::string selectedAnimation_;
-
 };

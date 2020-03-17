@@ -13,6 +13,8 @@ public:
 	void render(sf::RenderWindow* rw);
 	void tick();
 	void reset();
+	bool ended();
+	bool isLooping();
 	
 
 private:
