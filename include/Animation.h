@@ -3,20 +3,23 @@
 #include <string>
 #include <filesystem>
 #include <iostream>
+#include <iomanip>
+#include <algorithm>
 
 class Animation {
 
 public:
-	Animation(const std::string& path, const int& speed, const bool& loop);
+	Animation(const std::string& path);
 	void render(sf::RenderWindow* rw);
 	void tick();
+	void reset();
+	
 
 private:
 	std::vector<sf::Sprite*> sprites_;
 	int speed_;
 	int frame_;
 	sf::Clock clock;
-	int nbFiles_;
 	bool loop_;
 
 };

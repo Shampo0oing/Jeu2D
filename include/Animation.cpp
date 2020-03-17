@@ -1,14 +1,30 @@
 #include "Animation.h"
 #include "ImageLoader.h"
 #include <iostream>
+#include <fstream>
+using namespace std;
 
 
-Animation::Animation(const std::string& path, const int& speed, const bool& loop = false): speed_(speed), nbFiles_(0), frame_(0), loop_(loop)
+Animation::Animation(const string& path): frame_(0), loop_(false), speed_(200)
 {
-	for (const auto& entry : std::filesystem::directory_iterator(path)) {
+	for (const auto& entry : filesystem::directory_iterator(path)) {
+		//ajoute chaque sprite pour donner une animation
+		if (entry.path().extension().u8string() == ".png")
+			sprites_.push_back(ImageLoader::LoadImage(entry.path().u8string()));
 
-		sprites_.push_back(ImageLoader::LoadImage(entry.path().u8string()));
-		nbFiles_++;
+		else {
+
+			//ouvre le config.txt
+			ifstream fichierConfig(entry.path());
+			if (!fichierConfig.is_open())
+				break;
+			//lecture des attributs dans le config.txt
+			fichierConfig >> speed_ >> loop_;
+			//ferme config.txt
+			fichierConfig.close();
+			
+			
+		}
 	}
 }
 
@@ -20,13 +36,19 @@ void Animation::render(sf::RenderWindow* rw) {
 void Animation::tick() {
 	if (clock.getElapsedTime().asMilliseconds() >= speed_) {
 		
-		
-		if(loop_ || frame_ < nbFiles_ - 1)
-			frame_++;
+		if (frame_ < sprites_.size())
+			frame_ ++;
 
-		if (frame_ ==  nbFiles_ && loop_)
+		if (frame_ == sprites_.size())
 			frame_ = 0;
 
 		clock.restart();
 	}
 }
+
+void Animation::reset()
+{
+	frame_ = 0;
+	clock.restart();
+}
+
