@@ -13,7 +13,7 @@ int main() {
 	RenderWindow* rw = new RenderWindow(VideoMode(1280, 720), "Jeu2D");
 	rw->setKeyRepeatEnabled(false);
 	Event event;
-	Character c("../assets/images/knight");
+	Character c("../assets/images/knight", 0, 0);
 	Clock clock;
 
 	while (rw->isOpen()) {
@@ -23,42 +23,38 @@ int main() {
 			if (event.type == Event::EventType::Closed)
 				rw->close();
 
+		}
+
+
+		if (clock.getElapsedTime().asMilliseconds() >= 17) { // 60 fps
+
 			if (!Keyboard::isKeyPressed(Keyboard::X) && !Keyboard::isKeyPressed(Keyboard::Right)) {
 				c.selectAnimation("idle");
 			}
 
 			if (Keyboard::isKeyPressed(Keyboard::Right)) {
-				c.selectAnimation("run");
+				c.move(3, 0);
+			}
+
+			if (Keyboard::isKeyPressed(Keyboard::Left)) {
+				c.move(-3, 0);
 			}
 
 			if (Keyboard::isKeyPressed(Keyboard::X)) {
 				c.selectAnimation("attack");
 			}
-		}
-		
-			//augmente le nombres de frames
-
-
-		if (clock.getElapsedTime().asMilliseconds() >= 17) {
-
-
-
 
 			rw->clear();
 
-			c.render(rw); //Affiche les sprites
+			// Render game
+			c.render(rw);
 
 			rw->display();
 
 			clock.restart();
-
-
 		}
 
-
 		c.tick();
-
-
 	}
 
 

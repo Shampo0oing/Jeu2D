@@ -10,7 +10,7 @@ class Animation {
 
 public:
 	Animation(const std::string& path);
-	void render(sf::RenderWindow* rw);
+	void render(sf::RenderWindow* rw, int x, int y, int direction);
 	void tick();
 	void reset();
 	bool ended();

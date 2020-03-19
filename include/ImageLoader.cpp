@@ -12,6 +12,7 @@ Sprite* ImageLoader::LoadImage(const string& path)
 		Texture* texture = new Texture;
 		texture->loadFromFile(path);
 		Sprite* sprite = new Sprite(*texture);
+		sprite->setOrigin({ sprite->getLocalBounds().width / 2, 0 });
 		sprite->scale(3.0, 3.0);
 		images_[path] = sprite;
 	}

@@ -25,7 +25,13 @@ Animation::Animation(const string& path): frame_(0), loop_(false), speed_(200)
 	}
 }
 
-void Animation::render(sf::RenderWindow* rw) {
+void Animation::render(sf::RenderWindow* rw, int x, int y, int direction) {
+	if (direction == 0)
+		sprites_[frame_]->setScale(-3, 3);
+	if (direction == 1)
+		sprites_[frame_]->setScale(3, 3);
+
+	sprites_[frame_]->setPosition(x, y);	
 	rw->draw(*sprites_[frame_]);
 }
 
@@ -61,4 +67,5 @@ bool Animation::isLooping()
 {
 	return loop_;
 }
+
 
