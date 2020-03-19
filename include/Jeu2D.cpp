@@ -10,11 +10,15 @@ using namespace sf;
 
 int main() {
 
-	RenderWindow* rw = new RenderWindow(VideoMode(1280, 720), "Jeu2D");
+	RenderWindow* rw = new RenderWindow(VideoMode(1920, 1080), "Jeu2D");
 	rw->setKeyRepeatEnabled(false);
 	Event event;
-	Character c("../assets/images/knight", 0, 0);
+	Character c("../assets/images/knight", rw->getSize().x / 2, rw->getSize().y * 95/100, 6.f);
 	Clock clock;
+	Sprite* bg = ImageLoader::LoadImage("../assets/images/background.png");
+	bg->setScale(rw->getSize().x / bg->getLocalBounds().width, rw->getSize().y / bg->getLocalBounds().height );
+
+	Character troll("../assets/images/troll", rw->getSize().x / 1.5, rw->getSize().y * 95/100, 0.4f);
 
 	while (rw->isOpen()) {
 
@@ -22,39 +26,41 @@ int main() {
 
 			if (event.type == Event::EventType::Closed)
 				rw->close();
-
 		}
-
 
 		if (clock.getElapsedTime().asMilliseconds() >= 17) { // 60 fps
 
+			c.tick();
+			troll.tick();
+
 			if (!Keyboard::isKeyPressed(Keyboard::X) && !Keyboard::isKeyPressed(Keyboard::Right)) {
-				c.selectAnimation("idle");
+				troll.selectAnimation("idle");
 			}
 
 			if (Keyboard::isKeyPressed(Keyboard::Right)) {
-				c.move(3, 0);
+				troll.move(5, 0);
 			}
 
 			if (Keyboard::isKeyPressed(Keyboard::Left)) {
-				c.move(-3, 0);
+				troll.move(-5, 0);
 			}
 
 			if (Keyboard::isKeyPressed(Keyboard::X)) {
-				c.selectAnimation("attack");
+				troll.selectAnimation("attack");
 			}
 
 			rw->clear();
 
 			// Render game
+			rw->draw(*bg);
+			
+			troll.render(rw);
 			c.render(rw);
 
 			rw->display();
 
 			clock.restart();
 		}
-
-		c.tick();
 	}
 
 

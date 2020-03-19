@@ -9,7 +9,7 @@
 class Animation {
 
 public:
-	Animation(const std::string& path);
+	Animation(const std::string& path, float scale);
 	void render(sf::RenderWindow* rw, int x, int y, int direction);
 	void tick();
 	void reset();
@@ -23,5 +23,6 @@ private:
 	int frame_;
 	sf::Clock clock;
 	bool loop_;
+	float scale_;
 
 };

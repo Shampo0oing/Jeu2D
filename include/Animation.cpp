@@ -4,12 +4,15 @@
 #include <fstream>
 using namespace std;
 
-Animation::Animation(const string& path): frame_(0), loop_(false), speed_(200)
+Animation::Animation(const string& path, float scale): frame_(0), loop_(false), speed_(200), scale_(scale)
 {
 	for (const auto& entry : filesystem::directory_iterator(path)) {
 		//ajoute chaque sprite pour donner une animation
-		if (entry.path().extension().u8string() == ".png")
-			sprites_.push_back(ImageLoader::LoadImage(entry.path().u8string()));
+		if (entry.path().extension().u8string() == ".png") {
+			sf::Sprite* sprite = ImageLoader::LoadImage(entry.path().u8string());
+			sprite->setOrigin({ sprite->getLocalBounds().width / 2, sprite->getLocalBounds().height });
+			sprites_.push_back(sprite);
+		}
 
 		else {
 			//ouvre le config.txt
@@ -27,9 +30,9 @@ Animation::Animation(const string& path): frame_(0), loop_(false), speed_(200)
 
 void Animation::render(sf::RenderWindow* rw, int x, int y, int direction) {
 	if (direction == 0)
-		sprites_[frame_]->setScale(-3, 3);
+		sprites_[frame_]->setScale(-scale_, scale_);
 	if (direction == 1)
-		sprites_[frame_]->setScale(3, 3);
+		sprites_[frame_]->setScale(scale_, scale_);
 
 	sprites_[frame_]->setPosition(x, y);	
 	rw->draw(*sprites_[frame_]);

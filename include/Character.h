@@ -10,12 +10,11 @@
 class Character {
 
 public:
-	Character(const std::string& path, int x, int y);
+	Character(const std::string& path, int x, int y, float scale);
 	void render(sf::RenderWindow* rw);
 	void tick();
 	void selectAnimation(const std::string& name);
 	void move(int x, int y);
-
 
 
 private:
